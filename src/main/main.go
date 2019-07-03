@@ -1,31 +1,19 @@
 package main
 
 import (
-	"fmt"
+	"github.com/gosuri/uiprogress"
 	"time"
 )
 
-const (
-	BASE = "["
-	FILL = "="
-	//CAP  = ">"
-	FIN = "] ... COMPLETE!"
-)
-
 func main() {
-	// initialize loop for testing terminal output
-	x := 0
-	// run loop for x
-	for x <= 100 {
-		switch x {
-		case 0:
-			fmt.Print(BASE)
-		case 100:
-			fmt.Print(FIN)
-		default:
-			fmt.Printf(FILL)
-		}
-		time.Sleep(time.Second / 25)
-		x += 1
+	uiprogress.Start() // Begin render
+
+	myBar := uiprogress.AddBar(100) // Add bar to track progress
+	myBar.AppendCompleted()         // print completion time upon completion
+	myBar.PrependElapsed()          // print elapsed time before bar
+
+	for myBar.Incr() {
+		time.Sleep(time.Second / 20)
 	}
+
 }
